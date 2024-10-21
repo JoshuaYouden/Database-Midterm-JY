@@ -15,7 +15,7 @@ const pool = new Pool({
 async function createTable() {
   // TODO: Add code to create Movies, Customers, and Rentals tables
   await pool.query(
-    `CREATE TABLE movies (
+    `CREATE TABLE IF NOT EXISTS movies (
     movie_id SERIAL PRIMARY KEY,
     movie_title TEXT,
     movie_year INT,
@@ -26,7 +26,7 @@ async function createTable() {
   );
 
   await pool.query(
-    `CREATE TABLE customers (
+    `CREATE TABLE IF NOT EXISTS customers (
     customer_id SERIAL PRIMARY KEY,
     first_name TEXT,
     last_name TEXT,
@@ -37,7 +37,7 @@ async function createTable() {
   );
 
   await pool.query(
-    `CREATE TABLE rentals (
+    `CREATE TABLE IF NOT EXISTS rentals (
     customer_id INT REFERENCES customers(customer_id),
     movie_id INT REFERENCES movies(movie_id),
     rental_date DATE,
@@ -58,7 +58,13 @@ async function createTable() {
  */
 async function insertMovie(title, year, genre, director) {
   // TODO: Add code to insert a new movie into the Movies table
-  await pool.query();
+  await pool.query(
+    `INSERT INTO movies (movie_title, movie_year, movie_genre, movie_director) VALUES ($1, $2, $3, $4)`,
+    [title, year, genre, director]
+  );
+  console.log(
+    `Movie "${title}" by ${director} in ${year} as ${genre} genre added successfully`
+  );
 }
 
 /**
@@ -66,7 +72,6 @@ async function insertMovie(title, year, genre, director) {
  */
 async function displayMovies() {
   // TODO: Add code to retrieve and print all movies from the Movies table
-  await pool.query();
 }
 
 /**
@@ -77,7 +82,6 @@ async function displayMovies() {
  */
 async function updateCustomerEmail(customerId, newEmail) {
   // TODO: Add code to update a customer's email address
-  await pool.query();
 }
 
 /**
@@ -87,7 +91,6 @@ async function updateCustomerEmail(customerId, newEmail) {
  */
 async function removeCustomer(customerId) {
   // TODO: Add code to remove a customer and their rental history
-  await pool.query();
 }
 
 /**
