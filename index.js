@@ -89,6 +89,12 @@ async function displayMovies() {
  */
 async function updateCustomerEmail(customerId, newEmail) {
   // TODO: Add code to update a customer's email address
+  await pool.query(`UPDATE customers SET email = $1 WHERE customer_id = $2`, [
+    newEmail,
+    customerId,
+  ]);
+
+  console.log(`Customer ${customerId}'s email updated to ${newEmail}`);
 }
 
 /**
