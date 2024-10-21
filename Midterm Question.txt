@@ -1,0 +1,1 @@
+The code in Midterm.sql is in 3NF because it is already in 2NF, plus it has no transitive dependencies, thus, it makes it 3NF.
